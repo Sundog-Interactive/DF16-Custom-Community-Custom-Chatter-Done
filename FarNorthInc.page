@@ -1,0 +1,151 @@
+<apex:page controller="FarNorthIncCtl" showHeader="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" id="FarNorthInc" doctype="HTML-5.0">
+<html>
+    <head>
+        <c:FarNorthIncludes />
+    </head>
+    <body>
+        <section class="text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="company text-center">
+                            <h1>FarNorth, Inc.</h1>
+                            <h5>Your Manufacturing Headquarters</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="body-container text-center">
+            <div class="landing"></div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    &copy;2016 Dreamforce Presentation
+                </div>
+            </div>
+        </div>
+
+        <script>
+        (function () {
+            window.Web = window.Web || {};
+            window.Web.Main = {
+                Initialize: initialize
+            };
+
+            var context = null;
+            var page = null;
+            var userId = null;
+
+            var selectors = {
+                Context: '.body-container',
+                Landing: '.landing',
+                ChatterTile: '.chatter-tile'
+            };
+
+            function initialize() {
+                //Setup dom selects
+                context = $(selectors.Context);
+                page = {
+                    Landing: context.find(selectors.Landing),
+                    ChatterTile: context.find(selectors.ChatterTile)
+                };
+
+                loadMain();
+
+                //events
+                page.Landing.on('click', selectors.ChatterTile, function(e) {
+                   event.preventDefault();
+                   window.location.href = '{!URLFOR($Page.ChatterFeed)}';
+                });;
+            }
+
+            function loadMain() {
+                var template = Handlebars.compile($("#landing-template").html());
+                var items = {imgURL: '{!URLFOR($Resource.Landing)}'};
+                var output = template(items);
+                page.Landing.html(output);
+            }
+        }());
+
+        $(document).ready(function () {
+            Web.Main.Initialize();
+        });
+        </script>
+
+        <script id="landing-template" type="x-handlebars-template">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="menu-item tile">
+                            <a href="">
+                                <i class="fa fa-building-o"></i>
+                                <p>Accounts</p>
+                            </a>
+                        </div>
+                        <div class="menu-item tile">
+                            <a href="">
+                                <i class="fa fa-users"></i>
+                                <p>Contacts</p>
+                            </a>
+                        </div>
+                        <div class="menu-item tile">
+                            <a href="">
+                                <i class="fa fa-bell"></i>
+                                <p>Campaigns</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="feature-img">
+                            <img src="{{imgURL}}" class="img-responsive" alt="Responsive image"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="menu-item tile responsive">
+                                    <a href="">
+                                        <i class="fa fa-briefcase"></i>
+                                        <p>Leads</p>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="menu-item tile responsive-2">
+                                    <a href="">
+                                        <i class="fa fa-lightbulb-o"></i>
+                                        <p>Opportunities</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="menu-item tile">
+                            <a href="">
+                                <i class="fa fa-area-chart"></i>
+                                <p>Forecasts</p>
+                            </a>
+                        </div>
+                        <div class="menu-item tile">
+                            <a href="">
+                                <i class="fa fa-link"></i>
+                                <p>Contracts</p>
+                            </a>
+                        </div>
+                        <div class="menu-item tile chatter-tile">
+                            <a href="">
+                                <i class="fa fa-comments"></i>
+                                <p>Chatter</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+    </body>
+</html>
+</apex:page>

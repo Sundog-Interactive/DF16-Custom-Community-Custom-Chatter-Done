@@ -1,0 +1,84 @@
+<apex:page controller="FarNorthIncCtl" showHeader="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" id="Chatter" doctype="HTML-5.0">
+<html>
+    <head>
+        <c:FarNorthIncludes />
+        <script src="{!URLFOR($Resource.forcetk)}"></script>
+        <script src="{!URLFOR($Resource.ChatterFeed)}"></script>
+    </head>
+
+    <body>
+        <script>
+            var sessionId = '{!$Api.Session_ID}';
+            var forceTKConnectionParams = { accessToken: sessionId };
+            var currentUserId = '{!$User.Id}';
+            var communityID = '{!communityId}';
+            var baseUrl = '{!BaseUrl}';
+        </script>
+
+        <section class="text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="company text-center">
+                            <a href="{!URLFOR($Page.FarNorthInc)}"><h1>FarNorth, Inc.</h1></a>
+                            <h5>Your Manufacturing Headquarters</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="chatter-container container text-center">
+            <div class="feeds"></div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    &copy;2016 Dreamforce Presentation
+                </div>
+            </div>
+        </div>
+
+        <script>
+        </script>
+
+        <script id="feed-template" type="x-handlebars-template">
+            {{#each items}}
+                <div class="col-md-6">
+                    <div class="menu-item tile">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="media-object" src="{{photoUrl}}" alt="Photo">
+                                </a>
+                            </div>
+                            <div class="media-body text-left">
+                                <h4 class="media-heading text-left">{{{displayname}}}</h4>
+                                {{{feedItemText}}}  {{releativeCreatedDate}}
+                                {{#each comments}}
+                                    {{> commentsList }}
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </script>
+
+        <script id="comments-template" type="x-handlebars-template">
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="{{photoUrl}}" alt="Photo">
+                    </a>
+                </div>
+                <div class="media-body text-left">
+                    <h4 class="media-heading text-left">{{{displayname}}}</h4>
+                    {{{feedItemText}}} {{releativeCreatedDate}}
+                </div>
+            </div>
+        </script>
+    </body>
+</html>
+</apex:page>
